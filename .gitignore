@@ -3,3 +3,4 @@ manimenv/
 media/
 pip.log
 testtracker.py
+safety_parabola/__pycache__
