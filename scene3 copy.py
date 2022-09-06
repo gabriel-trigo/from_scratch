@@ -156,8 +156,8 @@ class Scene3(Scene):
                 color = PINK)
             return y_dot
 
-        # create axis
-        axes = Axes(
+        # create axes objects
+        complete_axes = Axes(
                 x_range = [0, 10, 1], 
                 y_range = [0, 4, 1], 
                 x_length = 7.0, 
@@ -167,11 +167,9 @@ class Scene3(Scene):
                     "numbers_with_elongated_ticks": np.arange(0, 12, 2)}, 
                 y_axis_config = {
                     "numbers_with_elongated_ticks": np.arange(0, 6, 2)}, 
-                tips = False)
-        axes.to_edge(DOWN)
-        axes.to_edge(RIGHT)
+                tips = False).to_edge(DOWN).to_edge(RIGHT)
 
-        complete_text = Text("Complete movement", font_size = 25).next_to(axes, UP)
+        complete_text = Text("Complete movement", font_size = 25).next_to(complete_axes, UP)
 
         # x axis
         x_ax = Axes(
@@ -194,16 +192,14 @@ class Scene3(Scene):
                 y_axis_config = {
                     "numbers_with_elongated_ticks": np.arange(0, 6, 2)}, 
                 tips = False)
-        y_ax.next_to(axes, LEFT, buff = 2.5)
+        y_ax.next_to(complete_axes, LEFT, buff = 2.5)
 
 
         
         x_text = MathTex("x_{(t)}=v_0 \\cos(\\theta) t", font_size = 35).next_to(x_ax, UP).shift(LEFT)
         y_text = MathTex("y_{(t)}=v_0 \\sin(\\theta) t - \\frac{g t^2}{2}", font_size = 35).next_to(y_ax, UP)
-        complete_text = MathTex("y_{(t)}=v_0 \\sin(\\theta)", "t", "- \\frac{g}{2}", "t^2", font_size = 35).next_to(axes, UP, buff=1.2)
+        complete_text = MathTex("y_{(t)}=v_0 \\sin(\\theta)", "t", "- \\frac{g}{2}", "t^2", font_size = 35).next_to(complete_axes, UP, buff=1.2)
         complete_text2 = MathTex("y_{(x)}=v_0 \\sin(\\theta)", "\\frac{x}{v_0 \\cos(\\theta)}", "-\\frac{g}{2}", "\\left(\\frac{x}{v_0 \\cos(\\theta)} \\right)^2", font_size=35).next_to(complete_text, DOWN)
-        # top_flash = Line(axes.coords_to_point(0, 4), axes.coords_to_point(10, 4), color = RED)
-        #rectangle = Rectangle(width = 5, height = 4, fill_opacity = 0.5, stroke_color = None, stroke_opacity = 0).move_to(axes.coords_to_point(0, 4))
         t_box = SurroundingRectangle(complete_text[1], buff = 0.1)
         t2_box = SurroundingRectangle(complete_text[3], buff = 0.1)
 
@@ -214,16 +210,13 @@ class Scene3(Scene):
         tracker = ValueTracker(0)
         trajectory = always_redraw(draw_curve_and_dot)
 
-        origin_dot = Dot(axes.coords_to_point(0, 0))
+        origin_dot = Dot(complete_axes.coords_to_point(0, 0))
 
         def new_lines_group():
              return VGroup(get_new_x_line(tracker), get_new_y_line(tracker))
-        #vertical_group = VGroup(y_ax, y_text)
-        #horizontal_group = VGroup(x_ax, x_text)
-        #complete_group = VGroup(axes, complete_text, trajectory)
 
 
-        self.play(FadeIn(axes), FadeIn(origin_dot), run_time = 0.5)
+        self.play(FadeIn(complete_axes), FadeIn(origin_dot), run_time = 0.5)
         self.add(trajectory, origin_dot)
         self.play(tracker.animate.set_value(9), run_time = 5)
         new_lines = always_redraw(new_lines_group)
@@ -233,14 +226,9 @@ class Scene3(Scene):
         self.play(FadeIn(new_lines), FadeIn(new_x_dot), FadeIn(new_y_dot), run_time = 1)
         self.play(tracker.animate.set_value(2.5), run_time = 3)
         self.play(tracker.animate.set_value(7), run_time = 3)
-        #self.play(Create(framebox3))
  
         self.play(FadeOut(new_lines))
-        #self.play(FadeOut(complete_group), FadeOut(origin_dot))
 
-        #vertical_group = VGroup(vertical_group, framebox1, new_y_dot)
-        #horizontal_group = VGroup(horizontal_group, framebox2, new_x_dot)
-        #complete_group = VGroup(complete_group, framebox3)
         self.play(x_text.animate.shift(2*LEFT))
         arrow = Arrow(start=LEFT, end=RIGHT, color=YELLOW).next_to(x_text, RIGHT)
         x_text_inv = MathTex("t_{(x)}=\\frac{x}{v_0 \\cos(\\theta)}", font_size = 35).next_to(arrow, RIGHT)
@@ -260,9 +248,9 @@ class Scene3(Scene):
         self.play(Create(t2_box), Create(t2_sub_box))
         self.play(FadeOut(t2_box), FadeOut(t2_sub_box))
 
-        the_group = VGroup(axes, origin_dot, trajectory)
+        the_group = VGroup(complete_axes, origin_dot, trajectory)
 
-        self.play(FadeOut(x_ax, x_text, y_ax, y_text, complete_text, new_x_dot, new_y_dot, origin_dot, trajectory, axes, x_text_inv, arrow))
+        self.play(FadeOut(x_ax, x_text, y_ax, y_text, complete_text, new_x_dot, new_y_dot, origin_dot, trajectory, complete_axes, x_text_inv, arrow))
 
         new_axes = Axes(
                 x_range = [-12, 12, 1], 
