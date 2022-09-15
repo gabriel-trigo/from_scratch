@@ -98,7 +98,9 @@ class Scene3(Scene):
 
         # draw new projection lines
         def new_lines_group():
-             return VGroup(get_new_x_line(tracker), get_new_y_line(tracker))
+             return VGroup(
+                get_new_x_line(tracker), 
+                get_new_y_line(tracker))
 
         # create complete axes
         complete_axes = Axes(
@@ -122,7 +124,7 @@ class Scene3(Scene):
                 axis_config={"color": WHITE}, 
                 x_axis_config={
                     "numbers_with_elongated_ticks": np.arange(0, 12, 2)}, 
-                tips=False).next_to(complete_axes, UP, buff = 1.0)
+                tips=False).next_to(complete_axes, UP, buff=1.0)
 
         # create y axes
         y_ax = Axes(
@@ -133,7 +135,7 @@ class Scene3(Scene):
                 axis_config={"color": WHITE}, 
                 y_axis_config={
                     "numbers_with_elongated_ticks": np.arange(0, 6, 2)}, 
-                tips=False).next_to(complete_axes, LEFT, buff = 2.5)
+                tips=False).next_to(complete_axes, LEFT, buff=2.5)
 
 
         # create text objects
