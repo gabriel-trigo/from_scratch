@@ -99,14 +99,26 @@ def solve_step(particle_list, step, size):
 
 
 
-def init_list_random(N, radius, mass, boxsize):
+def init_list_random(N, radius, mass, boxsize, split=True):
     """Generate N Particle objects in a random way in a list."""
     particle_list = []
 
     for i in range(N):
-        
-        v_mag = np.random.rand(1)*6
-        v_ang = np.random.rand(1)*2*np.pi
+
+        if split:
+
+            if i < N/5:
+                v_mag = 6
+                v_ang = np.pi/4
+            
+            else:
+                v_mag = 0
+                v_ang = 0
+
+        else:
+            v_mag = np.random.rand(1)*6
+            v_ang = np.random.rand(1)*2*np.pi
+
         v = np.append(v_mag*np.cos(v_ang), v_mag*np.sin(v_ang))
         
         collision = True
@@ -126,13 +138,15 @@ def init_list_random(N, radius, mass, boxsize):
     return particle_list
 
 
+f = 1
+t = 50
 
-particle_number = 1000
-boxsize = 200*(10)**(0.5)
+particle_number = 100*f
+boxsize = 200*f**0.5
 
 # You need a larger tfin and stepnumber to get the equilibrium state. But the computation takes more time.
-tfin = 50
-stepnumber = 15*50
+tfin = 10*t
+stepnumber = 300*t
 
 timestep = tfin/stepnumber
 
@@ -154,8 +168,8 @@ for i in range(len(particle_list)):
     all_v[:, 2*i: 2*i + 2] = particle_list[i].solvel
     all_pos[:, 2*i: 2*i + 2] = particle_list[i].solpos
 
-pd.DataFrame(all_v).to_csv("ideal_gas/vel.csv")
-pd.DataFrame(all_pos).to_csv("ideal_gas/pos.csv")
+pd.DataFrame(all_v).to_csv("ideal_gas/vel_1000.csv")
+pd.DataFrame(all_pos).to_csv("ideal_gas/pos_1000.csv")
 
 
 
