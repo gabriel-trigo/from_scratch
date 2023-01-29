@@ -1,21 +1,21 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 from manim import *
 
 f=0.9
 
 # scene 1
-class Prototype(Scene):
+class Prototype2(Scene):
     def construct(self):
 
-        pos = np.array(pd.read_csv("ideal_gas/pos.csv"))[1:, 1:]
-        vel = np.array(pd.read_csv("ideal_gas/vel.csv"))[1:, 1:]
+        pos = np.array(pd.read_csv("ideal_gas/pos_1000.csv"))[1:, 1:]
+        vel = np.array(pd.read_csv("ideal_gas/vel_1000.csv"))[1:, 1:]
 
-        print(np.sum(pos == 0))
+        k=2
 
         axes = Axes(
-                x_range=[0, 200, 1], 
-                y_range=[0, 200, 1], 
+                x_range=[0, 200*k**0.5, 1], 
+                y_range=[0, 200*k**0.5, 1], 
                 x_length=5*f, 
                 y_length=5*f, 
                 axis_config={"color": WHITE},  
@@ -27,8 +27,7 @@ class Prototype(Scene):
 
             for i in range(0, pos.shape[1], 2):
                 particles.append(Dot(axes.coords_to_point(
-                    *(pos[int(tracker.get_value()), i: i + 2])), radius=0.065*f, color=BLUE)) 
-                print(pos[int(tracker.get_value()), i: i + 2])
+                    *(pos[int(tracker.get_value()), i: i + 2])), radius=0.065*f/(k**0.5), color=BLUE)) 
 
             return VGroup(*particles)
 
@@ -61,7 +60,7 @@ class Prototype(Scene):
             return VGroup(chart2, labels2)
         
 
-        box = Square(side_length=5.05*f).move_to(axes.coords_to_point(100, 100))
+        box = Square(side_length=5.05*f).move_to(axes.coords_to_point(100*k**0.5, 100*k**0.5))
         self.add(box)
 
         tracker = ValueTracker(0)
@@ -77,6 +76,6 @@ class Prototype(Scene):
         self.add(chart)
         self.add(chart2)
         
-        self.play(tracker.animate.set_value(pos.shape[0] - 1), 
+        self.play(tracker.animate.set_value((pos.shape[0] - 1)), 
             rate_func=rate_functions.linear,
-            run_time = 35)
+            run_time = 30)

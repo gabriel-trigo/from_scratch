@@ -5,3 +5,9 @@ pip.log
 testtracker.py
 safety_parabola/__pycache__
 manim_env/
+Include/
+myenv/
+ideal_gas/data/
+ideal_gas/simulation.py
+ideal_gas/simulation3d.py
+private/

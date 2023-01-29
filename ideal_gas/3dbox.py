@@ -21,10 +21,8 @@ class ThreeBox(ThreeDScene):
                 tips=False).to_edge(DOWN)
 
         def plot_particles():
-
             particles = []
-
-            for i in range(pos.shape[1] - 1):
+            for i in range(10):
                 particles.append(Sphere(axes.coords_to_point(
                     *(pos[int(tracker.get_value()), 3 * i: 3 * i + 3])), radius=0.065)) 
 
