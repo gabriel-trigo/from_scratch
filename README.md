@@ -1,5 +1,5 @@
 # Welcome
-This repository contains the animation source code for my [Youtube Channel](https://www.youtube.com/channel/UCE-9gcnLnBjS0qqLxFXkIOw). The animations are produced [Manim](https://www.manim.community/), an open source Python library for creating math animations.
+This repository contains the animation source code for my [Youtube Channel](https://www.youtube.com/channel/UCE-9gcnLnBjS0qqLxFXkIOw). The animations are produced with [Manim](https://www.manim.community/), an open source Python library for creating math animations.
 
 ![](https://github.com/Trigozord/from_scratch/blob/master/gifs/ezgif.com-gif-maker.gif)
 
